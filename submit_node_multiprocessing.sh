@@ -13,7 +13,4 @@
 module purge
 module load anaconda/3
 
-# avoid overbooking of the cores which might occur via NumPy/MKL threading
-export OMP_NUM_THREADS=1
-
-srun python ./python_multiprocessing.py $SLURM_CPUS_PER_TASK
+srun python ./python_multiprocessing.py
