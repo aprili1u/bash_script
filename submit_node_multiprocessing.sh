@@ -7,7 +7,7 @@
 #SBATCH --mail-type=none
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1   # only start 1 task via srun because Python multiprocessing starts more tasks internally
-#SBATCH --cpus-per-task=32    # assign all the cores to that first task to make room for Python's multiprocessing tasks
+#SBATCH --cpus-per-task=1    # assign all the cores to that first task to make room for Python's multiprocessing tasks
 #SBATCH --time=00:01:00
 
 module purge
