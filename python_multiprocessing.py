@@ -3,7 +3,7 @@
 # import os, sys
 # import multiprocessing as mp
 
-def my_f(x):
+def my_f():
   """Function to be run in parallel.
   """
 #  print("{} : {}".format(x, os.getpid())) 
@@ -15,3 +15,5 @@ def my_f(x):
 
 # with mp.Pool(np) as p:
 #   p.map(my_f, range(np))
+
+my_f()
