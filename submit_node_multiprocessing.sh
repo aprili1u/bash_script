@@ -17,6 +17,6 @@ module load anaconda/3
 export OMP_NUM_THREADS=1
 
 echo "stating job ..."
-srun python ./python_multiprocessing.py $SLURM_CPUS_PER_TASK
+python ./python_multiprocessing.py $SLURM_CPUS_PER_TASK
 
 echo "...done"
