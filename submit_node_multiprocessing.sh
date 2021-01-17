@@ -11,6 +11,7 @@
 #SBATCH --ntasks-per-node=1   
 #SBATCH --cpus-per-task=16    
 #SBATCH --time=00:01:00
+#SBATCH --mem=128G
 #SBATCH --error=JobName.%J.err
 #SBATCH --output=JobName.%J.out
 
