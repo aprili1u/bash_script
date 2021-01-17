@@ -8,8 +8,8 @@
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=10   
-#SBATCH --cpus-per-task=10    
+#SBATCH --ntasks-per-node=1   
+#SBATCH --cpus-per-task=16    
 #SBATCH --time=00:01:00
 #SBATCH --mem=42G
 #SBATCH --error=JobName.%J.err
@@ -20,4 +20,7 @@ module load anaconda/3
 
 export OMP_NUM_THREADS=1
 
+echo "stating job ..."
 python ./python_multiprocessing.py $SLURM_CPUS_PER_TASK
+
+echo "...done"
