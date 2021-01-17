@@ -1,7 +1,5 @@
 #!/bin/bash -l
 
-#SBATCH -o ./job.out.%j
-#SBATCH -e ./job.err.%j
 #SBATCH -D ./
 #SBATCH -J PYTHON_MP
 #SBATCH --mail-user=cecile.aprili@gmail.com
