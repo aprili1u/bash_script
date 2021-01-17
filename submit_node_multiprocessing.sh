@@ -5,15 +5,18 @@
 #SBATCH -D ./
 #SBATCH -J PYTHON_MP
 #SBATCH --mail-user=cecile.aprili@gmail.com
+#SBATCH --mail-type=begin
+#SBATCH --mail-type=end
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1   # only start 1 task via srun because Python multiprocessing starts more tasks internally
-#SBATCH --cpus-per-task=32    # assign all the cores to that first task to make room for Python's multiprocessing tasks
+#SBATCH --ntasks-per-node=1   
+#SBATCH --cpus-per-task=32    
 #SBATCH --time=00:01:00
+#SBATCH --error=JobName.%J.err
+#SBATCH --output=JobName.%J.out
 
 module purge
 module load anaconda/3
 
-# avoid overbooking of the cores which might occur via NumPy/MKL threading
 export OMP_NUM_THREADS=1
 
 echo "stating job ..."
