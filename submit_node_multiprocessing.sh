@@ -8,7 +8,7 @@
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1   
+#SBATCH --ntasks-per-node=10   
 #SBATCH --cpus-per-task=2
 #SBATCH --time=00:01:00
 #SBATCH --mem=42G
@@ -20,7 +20,4 @@ module load anaconda/3
 
 export OMP_NUM_THREADS=1
 
-echo "stating job ..."
 python ./run.py $SLURM_CPUS_PER_TASK
-
-echo "...done"
