@@ -9,7 +9,7 @@
 #SBATCH --mail-type=end
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1   
-#SBATCH --cpus-per-task=20  
+#SBATCH --cpus-per-task=2
 #SBATCH --time=00:01:00
 #SBATCH --mem=42G
 #SBATCH --error=JobName.%J.err
