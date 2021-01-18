@@ -12,8 +12,8 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --time=00:01:00
 #SBATCH --mem=42G
-#SBATCH --error=JobName.%J.err
-#SBATCH --output=JobName.%J.out
+#SBATCH --error=First_test.%J.err
+#SBATCH --output=First_test.%J.out
 
 module purge
 module load anaconda/3
@@ -21,6 +21,6 @@ module load anaconda/3
 export OMP_NUM_THREADS=1
 
 echo "stating job ..."
-python ./python_multiprocessing.py $SLURM_CPUS_PER_TASK
+python ./run.py $SLURM_CPUS_PER_TASK
 
 echo "...done"
