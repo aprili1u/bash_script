@@ -2,6 +2,8 @@ from class_network import Network
 from plots import plot1, plot2, plot_boxes, plot_means, plot_transit
 import numpy as np
 import matplotlib.pyplot as plt
+import os, sys
+import multiprocessing as mp
 
 def lasts(L):
     """L is a list of lists lasts return a list of last items of each list in L"""
@@ -17,32 +19,42 @@ def combine_dictionnaries(ini_dictionary1,ini_dictionary2):
                     for x in set(ini_dictionary1).union(ini_dictionary2)}
 
     return(final_dictionary) 
-
-#Simulation parameters        
-num_nodes = 6
-interactions_per_node = 2000
-hawk_dove_payoff = [0.5, -1.5, 1, 0, 0.5, 0.5]
-memory_cost = 0.01  
-initial_memory_poisson = 4
-initial_aggression = 1
-network_methode = ['M1']
-#network_methode = ['M3', 'Small-world',4,0]
-#network_methode = ['M2','Uniform',6 , 0.1]
-
-#Create the initial Network
-my_network = Network(num_nodes, interactions_per_node, hawk_dove_payoff, memory_cost, initial_memory_poisson, initial_aggression, network_methode)
-Memory = [] #list of lists (L2) L2 is the list of memory of each individual (in order) at the end. Memory lists L2 for each generation
-Fitness = [] #same as Memory but with fitness data
-Aggression = []
-for i in range(4): #simulate this many generations
-    my_network.interact()
-    Memory.append(lasts(my_network.memory_history))
-    Fitness.append(lasts(my_network.fitness_history))
-    Aggression.append(list(my_network.aggression))
-    #plot1(my_network,1)
-    #print(plot_transit(my_network,4))
     
-    my_network.refresh_network()
-    
-print(Memory)
-print(Aggression)
+def my_f(x):
+  """Function to be run in parallel.
+  """
+    #Simulation parameters        
+    num_nodes = 6
+    interactions_per_node = 2000
+    hawk_dove_payoff = [0.5, -1.5, 1, 0, 0.5, 0.5]
+    memory_cost = 0.01  
+    initial_memory_poisson = 4
+    initial_aggression = 1
+    network_methode = ['M1']
+    #network_methode = ['M3', 'Small-world',4,0]
+    #network_methode = ['M2','Uniform',6 , 0.1]
+
+    #Create the initial Network
+    my_network = Network(num_nodes, interactions_per_node, hawk_dove_payoff, memory_cost, initial_memory_poisson, initial_aggression, network_methode)
+    Memory = [] #list of lists (L2) L2 is the list of memory of each individual (in order) at the end. Memory lists L2 for each generation
+    Fitness = [] #same as Memory but with fitness data
+    Aggression = []
+    for i in range(4): #simulate this many generations
+        my_network.interact()
+        Memory.append(lasts(my_network.memory_history))
+        Fitness.append(lasts(my_network.fitness_history))
+        Aggression.append(list(my_network.aggression))
+        #plot1(my_network,1)
+        #print(plot_transit(my_network,4))
+        
+        my_network.refresh_network()
+        
+    print(Memory)
+    print(Aggression)
+
+# set the number of processes to be used
+#np = mp.cpu_count()   # ... as detected by multiprocessing
+np = int(sys.argv[1])   # ... as passed in via the command line
+
+with mp.Pool(np) as p:
+  p.map(my_f, range(np))
