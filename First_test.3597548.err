@@ -1,4 +1,0 @@
-  File "./run.py", line 27
-    num_nodes = 6
-    ^
-IndentationError: unexpected indent
