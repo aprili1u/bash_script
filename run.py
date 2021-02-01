@@ -27,7 +27,8 @@ def combine_dictionnaries(ini_dictionary1, ini_dictionary2):
 def my_f(x):
     """Function to be run in parallel.
     """
-    print('np :', np)
+    print('index :', index)
+    index += 1
     # Simulation parameters
     num_nodes = 6
     interactions_per_node = 2000
@@ -56,14 +57,14 @@ def my_f(x):
         #print(plot_transit(my_network, 4))
         my_network.refresh_network()
 
-    print('Memory', Memory)
-    print('Agression', Aggression)
-    print('Fitness', Fitness)
+    print('Memory =', Memory)
+    print('Agression =', Aggression)
+    print('Fitness =', Fitness)
 
 
 # set the number of processes to be used
 # np = mp.cpu_count()   # ... as detected by multiprocessing
 np = int(sys.argv[1])   # ... as passed in via the command line
-
+index = 0
 with mp.Pool(np) as p:
     p.map(my_f, range(np))
