@@ -10,10 +10,10 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1   
 #SBATCH --cpus-per-task=10
-#SBATCH --time=00:01:00
+#SBATCH --time=00:10:00
 #SBATCH --mem=42G
 #SBATCH --error=First_test.%J.err
-#SBATCH --output=First_test.%J.out
+#SBATCH --output=First_test.%J.py
 
 module purge
 module load anaconda/3
