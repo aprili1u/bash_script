@@ -66,4 +66,4 @@ def my_f(x):
 np = int(sys.argv[1])   # ... as passed in via the command line
 
 with mp.Pool(np) as p:
-    p.map(my_f(np), range(np))
+    p.map(my_f, range(np))
