@@ -10,8 +10,8 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1   
 #SBATCH --cpus-per-task=10
-#SBATCH --time=05:00:00
-#SBATCH --mem=42G
+#SBATCH --time=03:00:00
+#SBATCH --mem=142G
 #SBATCH --error=First_test.%J.err
 #SBATCH --output=First_test.%J.py
 
