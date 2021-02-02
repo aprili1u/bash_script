@@ -1,2 +1,0 @@
-slurmstepd: error: *** JOB 18777711 ON draco03 CANCELLED AT 2021-02-02T18:48:44 DUE TO TIME LIMIT ***
-slurmstepd: error: Detected 8 oom-kill event(s) in step 18777711.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
