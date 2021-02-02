@@ -1,3 +1,6 @@
+mutation offsets for aggression, Gaussian(0, 0.01) values
+mutation offsets for memory, integers from Gaussian(0,1)
+
 First_test parameters:
 
 size is the normal distribution "i/n"

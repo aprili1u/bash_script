@@ -41,8 +41,8 @@ def my_f(x):
     print('x :', x)
     # index += 1
     # Simulation parameters
-    num_nodes = 10
-    interactions_per_node = 100
+    num_nodes = 50
+    interactions_per_node = 500
     hawk_dove_payoff = [0.5, -1.5, 1, 0, 0.5, 0.5]
     memory_cost = 0.01
     initial_memory_poisson = 1
