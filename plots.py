@@ -126,7 +126,7 @@ def plot_boxes(network, i, x):
     plt.show()
 
 
-def plot_means(network, x):
+def plot_means(network, x2):
     # plots average fitness, memory, agression for each generation
     t = len(network.history)
     fit_history = [network.history[i][0] for i in range(t)]
@@ -140,7 +140,7 @@ def plot_means(network, x):
     axes[1].set_title('memory')
     axes[2].plot(x, aggr_history)
     axes[2].set_title('aggression')
-    plt.savefig("plot_means_try"+str(x)+".png")
+    plt.savefig("plot_means_try"+str(x2)+".png")
     plt.show()
 
 
