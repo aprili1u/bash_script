@@ -47,8 +47,8 @@ def my_f(x):
     memory_cost = 0.01
     initial_memory_poisson = 1
     initial_aggression = 0.5
-    # network_methode = ['M1']
-    network_methode = ['M3', 'Small-world', 4, 0.1]
+    network_methode = ['M1']
+    #network_methode = ['M3', 'Small-world', 4, 0.1]
     #network_methode = ['M2','Uniform',6 , 0.1]
 
     # Create the initial Network
@@ -59,7 +59,7 @@ def my_f(x):
     Fitness = []  # same as Memory but with fitness data
     Aggression = []
     Memo_size = []
-    for i in range(1000):  # simulate this many generations
+    for i in range(10000):  # simulate this many generations
         my_network.interact()
         Memo_uncertainty.append(mean_per_indiv(
             my_network.memo_uncertainty_history))
@@ -67,7 +67,7 @@ def my_f(x):
         Aggression.append(list(my_network.aggression))
         Memo_size.append(list(my_network.memory))
         # boxes are printed only for a few generations
-        if (i == 0 or i == 10 or i == 100 or i == 500 or i == 800 or i == 900 or i == 950 or i == 999):
+        if (i == 0 or i == 100 or i == 1000 or i == 5000 or i == 8000 or i == 9000 or i == 9500 or i == 9999):
             plot_boxes(my_network, i, x)
         my_network.refresh_network()
 
