@@ -6,6 +6,8 @@ import os
 import sys
 import multiprocessing as mp
 
+index = 0
+
 
 def lasts(L):
     """L is a list of lists lasts return a list of last items of each list in L"""
@@ -28,6 +30,7 @@ def my_f(x):
     """Function to be run in parallel.
     """
     print('index :', index)
+    print('x :', x)
     index += 1
     # Simulation parameters
     num_nodes = 6
@@ -65,6 +68,6 @@ def my_f(x):
 # set the number of processes to be used
 # np = mp.cpu_count()   # ... as detected by multiprocessing
 np = int(sys.argv[1])   # ... as passed in via the command line
-index = 0
+
 with mp.Pool(np) as p:
     p.map(my_f, range(np))
