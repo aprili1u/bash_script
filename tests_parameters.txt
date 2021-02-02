@@ -1,5 +1,6 @@
 First_test parameters:
 
+size is the normal distribution "i/n"
 def my_f(x):
     """Function to be run in parallel.
     """

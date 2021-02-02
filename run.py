@@ -70,16 +70,18 @@ def my_f(x):
         if (i == 0 or i == 10 or i == 100 or i == 500 or i == 800 or i == 900 or i == 950 or i == 999):
             plot_boxes(my_network, i, x)
         my_network.refresh_network()
+
     plot_means(my_network, x)
-    print('Memory_uncertainty =', Memo_uncertainty)
+
     print('Memory_size =', Memo_size)
     print('Agression =', Aggression)
     print('Fitness =', Fitness)
+    print('Memory_uncertainty =', Memo_uncertainty)
 
 
 # set the number of processes to be used
 # np = mp.cpu_count()   # ... as detected by multiprocessing
-np = int(sys.argv[1])   # ... as passed in via the command line
+NP = int(sys.argv[1])   # ... as passed in via the command line
 
-with mp.Pool(np) as p:
-    p.map(my_f, range(np))
+with mp.Pool(NP) as p:
+    p.map(my_f, range(NP))
