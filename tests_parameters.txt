@@ -1,38 +1,4 @@
-from class_network import Network
-from plots import plot1, plot2, plot_boxes, plot_means, plot_transit
-import numpy as np
-import matplotlib.pyplot as plt
-import os
-import sys
-import multiprocessing as mp
-
-index = 0
-
-
-def lasts(L):
-    """L is a list of lists lasts return a list of last items of each list in L"""
-    Lasts = []
-    for ind in L:  # browse L
-        Lasts.append(ind[-1])
-    return Lasts
-
-
-def mean_per_indiv(L):
-    """L is a list of lists mean_per_indiv return a list of the average avalue of each list in L"""
-    M = []
-    for ind in L:  # browse L
-        M.append(np.mean(ind))
-    return M
-
-
-def combine_dictionnaries(ini_dictionary1, ini_dictionary2):
-    # combining dictionaries
-    # using dict comprehension and set
-    final_dictionary = {x: ini_dictionary1.get(x, 0) + ini_dictionary2.get(x, 0)
-                        for x in set(ini_dictionary1).union(ini_dictionary2)}
-
-    return(final_dictionary)
-
+First_test parameters:
 
 def my_f(x):
     """Function to be run in parallel.
@@ -47,9 +13,7 @@ def my_f(x):
     memory_cost = 0.01
     initial_memory_poisson = 1
     initial_aggression = 0.5
-    # network_methode = ['M1']
     network_methode = ['M3', 'Small-world', 4, 0.1]
-    #network_methode = ['M2','Uniform',6 , 0.1]
 
     # Create the initial Network
     my_network = Network(num_nodes, interactions_per_node, hawk_dove_payoff,
@@ -75,11 +39,3 @@ def my_f(x):
     print('Memory_size =', Memo_size)
     print('Agression =', Aggression)
     print('Fitness =', Fitness)
-
-
-# set the number of processes to be used
-# np = mp.cpu_count()   # ... as detected by multiprocessing
-np = int(sys.argv[1])   # ... as passed in via the command line
-
-with mp.Pool(np) as p:
-    p.map(my_f, range(np))

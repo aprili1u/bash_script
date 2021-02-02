@@ -23,7 +23,7 @@ def plot1(network, pace):
     # plot relationship between fitness and memory for each individual of one generation
     # the size of the dots depends on the numbers of times that the individual is in that situation
     # returns the Fitness maximum
-    l = len(network.memory_history)
+    l = len(network.memo_uncertainty_history)
     fig2, ax2 = plt.subplots()
     fig2.set_size_inches(13, 10)
     ax2.set_xlabel('individual')
@@ -37,12 +37,12 @@ def plot1(network, pace):
     size = []
 
     fitness_history = network.fitness_history
-    memory_history = network.memory_history
-    size = count_occurrence(memory_history)
+    memo_uncertainty_history = network.memo_uncertainty_history
+    size = count_occurrence(memo_uncertainty_history)
     for i in range(0, l, pace):
         Fitness += fitness_history[i]
-        Memory += memory_history[i]
-        Individual += [i]*len(memory_history[i])
+        Memory += memo_uncertainty_history[i]
+        Individual += [i]*len(memo_uncertainty_history[i])
     plt.scatter(Individual, Memory, s=size,
                 c=Fitness, cmap='rainbow', alpha=0.8)
     cbar = plt.colorbar()
@@ -58,15 +58,15 @@ def plot2(network, Fit_max):
     ax2.set_ylabel('SL-SW')
     ax2.set_title('Relationship Between Individual and Memory')
 
-    # Fitness = []
-    # Memory = []
-    # Individual = []
+    Fitness = []
+    Memory = []
+    Individual = []
     fitness_history = network.fitness_history
-    memory_history = network.memory_history
-    # size = count_occurrence(memory_history)
+    memo_uncertainty_history = network.memo_uncertainty_history
+    size = count_occurrence(memo_uncertainty_history)
     for i in range(len(fitness_history)):  # for each individual
-        size = count_occurrence([memory_history[i]])
-        memo = memory_history[i][0]
+        size = count_occurrence([memo_uncertainty_history[i]])
+        memo = memo_uncertainty_history[i][0]
         cat = 0
         cat1 = 0  # count occurence (0,Fit_max/4)
         cat2 = 0  # count occurence (Fit_max/4, Fit_max/2)
@@ -74,7 +74,7 @@ def plot2(network, Fit_max):
         cat4 = 0
         for k in range(len(fitness_history[i])):
             fit = fitness_history[i][k]
-            if memo != memory_history[i][k]:
+            if memo != memo_uncertainty_history[i][k]:
               #size = cat
                 if cat != 0:
                     ax2.scatter(i, memo, s=cat, marker=cercle(
@@ -85,7 +85,7 @@ def plot2(network, Fit_max):
                         (cat1)/cat, (cat2+cat1)/cat), facecolor='blue')
                     ax2.scatter(i, memo, s=cat, marker=cercle(
                         0, (cat1)/cat), facecolor='purple')
-                memo = memory_history[i][k]
+                memo = memo_uncertainty_history[i][k]
                 cat = 0
                 cat1 = 0
                 cat2 = 0
@@ -113,20 +113,20 @@ def plot2(network, Fit_max):
     plt.show()
 
 
-def plot_boxes(network, i):
+def plot_boxes(network, i, x):
     # same as plot1 but with boxes to show Q1,Q2,Q3,Q4
-    data = network.memory_history
+    data = network.memo_uncertainty_history
     fig = plt.figure(figsize=(10, 7))
     plt.xlabel('Individual')
     plt.ylabel('SL-SW')
     plt.title("Box plot of SL-SW")
     ax = fig.add_axes([0, 0, 1, 1])
     bp = ax.boxplot(data)
-    plt.savefig("plot_boxe"+str(i)+".png")
+    plt.savefig("plot_boxes_generation"+str(i)+"try"+str(x)+".png")
     plt.show()
 
 
-def plot_means(network):
+def plot_means(network, x):
     # plots average fitness, memory, agression for each generation
     t = len(network.history)
     fit_history = [network.history[i][0] for i in range(t)]
@@ -140,7 +140,7 @@ def plot_means(network):
     axes[1].set_title('memory')
     axes[2].plot(x, aggr_history)
     axes[2].set_title('aggression')
-    plt.savefig("plot_means.png")
+    plt.savefig("plot_means_try"+str(x)+".png")
     plt.show()
 
 
@@ -148,11 +148,11 @@ def plot_transit(network, indiv):
     # plots a graph of probability of transit from state to state for one individual of one generation
     # the nodes are the different states and the edges the probability of transit -p--->
 
-    # nodes = count_occurrence([network.memory_history[indiv]]) #the different states
+    # nodes = count_occurrence([network.memo_uncertainty_history[indiv]]) #the different states
     dic = {}
-    for i in range(len(network.memory_history[indiv])-1):
-        edge = (str(round(network.memory_history[indiv][i], 2)), str(
-            round(network.memory_history[indiv][i+1], 2)))
+    for i in range(len(network.memo_uncertainty_history[indiv])-1):
+        edge = (str(round(network.memo_uncertainty_history[indiv][i], 2)), str(
+            round(network.memo_uncertainty_history[indiv][i+1], 2)))
         if edge in dic:
             dic[edge] += 1
         else:
