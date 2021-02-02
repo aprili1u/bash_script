@@ -1,0 +1,32 @@
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/mpcdf/soft/SLE_12/packages/x86_64/anaconda/3/2020.02/lib/python3.7/multiprocessing/pool.py", line 121, in worker
+    result = (True, func(*args, **kwds))
+  File "/mpcdf/soft/SLE_12/packages/x86_64/anaconda/3/2020.02/lib/python3.7/multiprocessing/pool.py", line 44, in mapstar
+    return list(map(*args))
+  File "./run.py", line 56, in my_f
+    memory_cost, initial_memory_poisson, initial_aggression, network_methode)
+  File "/draco/u/iuyehara/bash_script/class_network.py", line 124, in __init__
+    self.graphs[0])
+  File "/draco/u/iuyehara/bash_script/class_network.py", line 58, in extremum_centrality
+    centrality = nx.betweenness_centrality(graph)
+  File "</mpcdf/soft/SLE_12/packages/x86_64/anaconda/3/2020.02/lib/python3.7/site-packages/decorator.py:decorator-gen-124>", line 2, in betweenness_centrality
+  File "/mpcdf/soft/SLE_12/packages/x86_64/anaconda/3/2020.02/lib/python3.7/site-packages/networkx/utils/decorators.py", line 464, in _random_state
+    return func(*new_args, **kwargs)
+  File "</mpcdf/soft/SLE_12/packages/x86_64/anaconda/3/2020.02/lib/python3.7/site-packages/decorator.py:decorator-gen-123>", line 2, in betweenness_centrality
+  File "/mpcdf/soft/SLE_12/packages/x86_64/anaconda/3/2020.02/lib/python3.7/site-packages/networkx/utils/decorators.py", line 80, in _not_implemented_for
+    raise nx.NetworkXNotImplemented(msg)
+networkx.exception.NetworkXNotImplemented: not implemented for multigraph type
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "./run.py", line 87, in <module>
+    p.map(my_f, range(NP))
+  File "/mpcdf/soft/SLE_12/packages/x86_64/anaconda/3/2020.02/lib/python3.7/multiprocessing/pool.py", line 268, in map
+    return self._map_async(func, iterable, mapstar, chunksize).get()
+  File "/mpcdf/soft/SLE_12/packages/x86_64/anaconda/3/2020.02/lib/python3.7/multiprocessing/pool.py", line 657, in get
+    raise self._value
+networkx.exception.NetworkXNotImplemented: not implemented for multigraph type
