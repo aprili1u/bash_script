@@ -120,8 +120,8 @@ class Network:
                 self.graphs = [nx.watts_strogatz_graph(
                     num_nodes, self.network_methode[2], 0)]
                 self.Max_edges = len(self.graphs[0].edges())
-        (self.min_centrality, self.max_centrality) = extremum_centrality(
-            self.graphs[0])
+        # (self.min_centrality, self.max_centrality) = extremum_centrality(
+        #     self.graphs[0])
 
     def interact(self):
         # by default each node has the same probability of having an interaction, with all nodes equally likely to interact with all other nodes
@@ -368,8 +368,8 @@ class Network:
             if (self.network_methode[1] == 'Regular-lattice'):
                 self.graphs = [nx.watts_strogatz_graph(
                     self.num_nodes, self.network_methode[2], 0)]
-        (self.min_centrality, self.max_centrality) = extremum_centrality(
-            self.graphs[0])
+        # (self.min_centrality, self.max_centrality) = extremum_centrality(
+        #     self.graphs[0])
 
         # create new Nodes to fully replace the existing network
         # get fitness of Nodes
