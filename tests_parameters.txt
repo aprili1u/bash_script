@@ -43,7 +43,7 @@ def my_f(x):
 
 Second Test:
 size is the normal distribution "i/n"
-
+extremum centrality commented
 def my_f(x):
     """Function to be run in parallel.
     """
