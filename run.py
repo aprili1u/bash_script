@@ -29,9 +29,9 @@ def combine_dictionnaries(ini_dictionary1, ini_dictionary2):
 def my_f(x):
     """Function to be run in parallel.
     """
-    print('index :', index)
+    # print('index :', index)
     print('x :', x)
-    index += 1
+    # index += 1
     # Simulation parameters
     num_nodes = 6
     interactions_per_node = 2000

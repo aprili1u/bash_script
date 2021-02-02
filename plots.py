@@ -58,12 +58,12 @@ def plot2(network, Fit_max):
     ax2.set_ylabel('SL-SW')
     ax2.set_title('Relationship Between Individual and Memory')
 
-    Fitness = []
-    Memory = []
-    Individual = []
+    # Fitness = []
+    # Memory = []
+    # Individual = []
     fitness_history = network.fitness_history
     memory_history = network.memory_history
-    size = count_occurrence(memory_history)
+    # size = count_occurrence(memory_history)
     for i in range(len(fitness_history)):  # for each individual
         size = count_occurrence([memory_history[i]])
         memo = memory_history[i][0]
