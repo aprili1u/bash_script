@@ -46,3 +46,27 @@ tasks of the per-task memory high-water marks; cf. "man sacct"):
 ------------ ---------- ------ ------ ------ ------------ ------------ ---------- -------- 
 18775806      PYTHON_MP      1            20                             00:00:03      1:0 
   
+                                  
+================================= 
+Global information about the job: 
+================================= 
+  
+Job owner: iuyehara(62033)
+Job name:  PYTHON_MP
+Node list: draco03
+Job start: Tue Feb  2 17:02:23 CET 2021
+Job end:   Tue Feb  2 17:32:28 CET 2021
+Work dir:  /u/iuyehara/bash_script/./
+Command:   /draco/u/iuyehara/bash_script/submit_node_multiprocessing.sh
+  
+  
+  
+==========================================================================================
+Information on jobsteps (Note: MaxRSS/AveRSS is the maximum/average over all 
+tasks of the per-task memory high-water marks; cf. "man sacct"): 
+==========================================================================================
+  
+       JobID    JobName NNodes NTasks  NCPUS       MaxRSS       AveRSS    Elapsed ExitCode 
+------------ ---------- ------ ------ ------ ------------ ------------ ---------- -------- 
+18776320      PYTHON_MP      1            20                             00:30:05      0:0 
+  
