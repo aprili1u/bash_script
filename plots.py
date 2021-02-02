@@ -115,14 +115,14 @@ def plot2(network, Fit_max):
 
 def plot_boxes(network, i):
     # same as plot1 but with boxes to show Q1,Q2,Q3,Q4
-    data = memory_history = network.memory_history
+    data = network.memory_history
     fig = plt.figure(figsize=(10, 7))
     plt.xlabel('Individual')
     plt.ylabel('SL-SW')
     plt.title("Box plot of SL-SW")
     ax = fig.add_axes([0, 0, 1, 1])
     bp = ax.boxplot(data)
-    plt.savefig("plot_boxe.png")
+    plt.savefig("plot_boxe"+str(i)+".png")
     plt.show()
 
 
@@ -140,6 +140,7 @@ def plot_means(network):
     axes[1].set_title('memory')
     axes[2].plot(x, aggr_history)
     axes[2].set_title('aggression')
+    plt.savefig("plot_means.png")
     plt.show()
 
 
