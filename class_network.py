@@ -84,9 +84,10 @@ class Network:
             lam=initial_memory_poisson, size=self.num_nodes)
         # self.memory = [initial_memory_poisson]*self.num_nodes #we fix the memory
         # initial aggression is a Gaussian(loc, 0.05)
-        self.aggression = np.random.normal(
-            loc=initial_aggression, scale=0.05, size=self.num_nodes)
-        # self.aggression = [initial_aggression]*self.num_nodes #we fix aggression for the moment
+        # self.aggression = np.random.normal(
+        #     loc=initial_aggression, scale=0.05, size=self.num_nodes)
+        self.aggression = [initial_aggression] * \
+            self.num_nodes  # we fix aggression for the moment
         # generate uniform sample of sizes list, each node has a 'size'
         self.sizes = np.random.random_sample(self.num_nodes)
 
@@ -395,10 +396,10 @@ class Network:
         # add mutations
         memory_mutations = np.random.standard_normal(self.num_nodes).astype(
             int)  # mutation offsets for memory, integers from Gaussian(0,1)
-        aggression_mutations = np.random.normal(0, 0.01, self.num_nodes).astype(
-            'float64')  # mutation offsets for aggression, Gaussian(0, 0.05) values
+        # aggression_mutations = np.random.normal(0, 0.01, self.num_nodes).astype(
+        #     'float64')  # mutation offsets for aggression, Gaussian(0, 0.05) values
         reproducing_node_memory += memory_mutations  # mutate memory
-        reproducing_node_aggression += aggression_mutations  # mutate aggression
+        # reproducing_node_aggression += aggression_mutations  # mutate aggression
 
         # generate uniform sample of sizes
         self.sizes = np.random.random_sample(self.num_nodes)

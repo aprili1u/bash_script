@@ -12,8 +12,8 @@
 #SBATCH --cpus-per-task=10
 #SBATCH --time=02:00:00
 #SBATCH --mem=42G
-#SBATCH --error=First_test.%J.err
-#SBATCH --output=First_test.%J.py
+#SBATCH --error=7th_test.%J.err
+#SBATCH --output=7th_test.%J.py
 
 module purge
 module load anaconda/3

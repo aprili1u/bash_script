@@ -47,8 +47,8 @@ def my_f(x):
     memory_cost = 0.01
     initial_memory_poisson = 1
     initial_aggression = 0.5
-    # network_methode = ['M1']
-    network_methode = ['M3', 'Small-world', 4, 0.1]
+    network_methode = ['M1']
+    # network_methode = ['M3', 'Small-world', 4, 0.1]
     #network_methode = ['M2','Uniform',6 , 0.1]
 
     # Create the initial Network
@@ -76,10 +76,10 @@ def my_f(x):
 
     plot_means(my_network, x)
 
-    print('Memory_size =', Memo_size)
-    print('Agression =', Aggression)
-    print('Fitness =', Fitness)
-    print('Memory_uncertainty =', Memo_uncertainty)
+    print('Memory_size ='+str(x), Memo_size)
+    print('Agression ='+str(x), Aggression)
+    print('Fitness ='+str(x), Fitness)
+    print('Memory_uncertainty ='+str(x), Memo_uncertainty)
 
 
 # set the number of processes to be used
