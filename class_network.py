@@ -87,16 +87,18 @@ class Network:
         self.aggression = np.random.normal(
             loc=initial_aggression, scale=0.05, size=self.num_nodes)
         # self.aggression = [initial_aggression]*self.num_nodes #we fix aggression for the moment
-        # sizes = np.random.random_sample(self.num_nodes) #generate uniform sample of sizes list, each node has a 'size'
+        # generate uniform sample of sizes list, each node has a 'size'
+        self.sizes = np.random.random_sample(self.num_nodes)
 
         # self.network_methode = check_network_method(network_methode) #list with first element the methode, second the mode, 3rd mean, 4th para
         self.network_methode = network_methode
         # create inital Nodes
         for i in range(self.num_nodes):
-            #self.nodes.append(Node(sizes[i], self.memory[i], self.aggression[i]))
-            # the size is: i/(self.num_nodes-1)
             self.nodes.append(
-                Node(i/(self.num_nodes-1), self.memory[i], self.aggression[i]))
+                Node(self.sizes[i], self.memory[i], self.aggression[i]))
+            # the size is: i/(self.num_nodes-1)
+            # self.nodes.append(
+            #     Node(i/(self.num_nodes-1), self.memory[i], self.aggression[i]))
             # fill the initial fitness of each fish (0)
             self.fitness_history.append([self.nodes[i].fitness])
             self.memo_uncertainty_history.append(
@@ -398,16 +400,18 @@ class Network:
         reproducing_node_memory += memory_mutations  # mutate memory
         reproducing_node_aggression += aggression_mutations  # mutate aggression
 
-        # sizes = np.random.random_sample(self.num_nodes) #generate uniform sample of sizes
+        # generate uniform sample of sizes
+        self.sizes = np.random.random_sample(self.num_nodes)
 
         del self.nodes[:]  # clear current nodes
         for i in range(self.num_nodes):  # create new nodes
             if (self.network_methode[0] != 'M3'):
                 self.graphs[len(self.graphs)-1].add_node(i, key=i)
-            #self.nodes.append(Node(sizes[i], reproducing_node_memory[i], reproducing_node_aggression[i]))
+            self.nodes.append(
+                Node(self.sizes[i], reproducing_node_memory[i], reproducing_node_aggression[i]))
             # the size is: i/(self.num_nodes-1)
-            self.nodes.append(Node(
-                i/(self.num_nodes-1), reproducing_node_memory[i], reproducing_node_aggression[i]))
+            # self.nodes.append(Node(
+            #     i/(self.num_nodes-1), reproducing_node_memory[i], reproducing_node_aggression[i]))
             # fill the initial fitness of each fish (0)
             self.fitness_history.append([self.nodes[i].fitness])
             self.memo_uncertainty_history.append(

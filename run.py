@@ -59,6 +59,7 @@ def my_f(x):
     Fitness = []  # same as Memory but with fitness data
     Aggression = []
     Memo_size = []
+    Sizes = []
     for i in range(4000):  # simulate this many generations
         my_network.interact()
         Memo_uncertainty.append(mean_per_indiv(
@@ -69,6 +70,8 @@ def my_f(x):
         # boxes are printed only for a few generations
         if (i == 0 or i == 100 or i == 1000 or i == 2500 or i == 3000 or i == 3800 or i == 3900 or i == 3999):
             plot_boxes(my_network, i, x)
+            Sizes.append(my_network.sizes)
+
         my_network.refresh_network()
 
     plot_means(my_network, x)
