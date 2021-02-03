@@ -394,8 +394,11 @@ class Network:
             reproducing_node_memory), np.mean(reproducing_node_aggression)])
 
         # add mutations
-        memory_mutations = np.random.standard_normal(self.num_nodes).astype(
-            int)  # mutation offsets for memory, integers from Gaussian(0,1)
+        mutations = np.random.binomial(1, 0.1, self.num_nodes)
+        sign = np.random.choice([-1, 1], size=self.num_nodes)
+        memory_mutations = mutations*sign
+        # memory_mutations = np.random.standard_normal(self.num_nodes).astype(
+        #     int)  # mutation offsets for memory, integers from Gaussian(0,1)
         # aggression_mutations = np.random.normal(0, 0.01, self.num_nodes).astype(
         #     'float64')  # mutation offsets for aggression, Gaussian(0, 0.05) values
         reproducing_node_memory += memory_mutations  # mutate memory

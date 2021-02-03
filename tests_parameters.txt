@@ -271,10 +271,21 @@ def my_f(x):
     print('Fitness ='+str(x), Fitness)
     print('Memory_uncertainty ='+str(x), Memo_uncertainty)
 
+Mutation of memory is now binomial of trial 1 , rate 0.1
 7th Test:
 Same as 5 
-with fixed agression to 0.5
+with fixed aggression to 0.5
 
 8th Test:
 Same as 6
-with fixed agression to 0.5
+with fixed aggression to 0.5
+
+9th Test:
+Same as 5 
+with fixed aggression to 0.5
+and 100 individual
+
+10th Test:
+Same as 5 
+with fixed aggression to 0.5
+and 1000 individual
