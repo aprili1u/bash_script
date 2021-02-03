@@ -88,3 +88,49 @@ def my_f(x):
     print('Agression =', Aggression)
     print('Fitness =', Fitness)
     print('Memory_uncertainty =', Memo_uncertainty)
+
+Third test:
+size is the normal distribution "i/n"
+def my_f(x):
+    """Function to be run in parallel.
+    """
+    # print('index :', index)
+    print('x :', x)
+    # index += 1
+    # Simulation parameters
+    num_nodes = 50
+    interactions_per_node = 500
+    hawk_dove_payoff = [0.5, -1.5, 1, 0, 0.5, 0.5]
+    memory_cost = 0.01
+    initial_memory_poisson = 1
+    initial_aggression = 0.5
+    network_methode = ['M1']
+    #network_methode = ['M3', 'Small-world', 4, 0.1]
+    #network_methode = ['M2','Uniform',6 , 0.1]
+
+    # Create the initial Network
+    my_network = Network(num_nodes, interactions_per_node, hawk_dove_payoff,
+                         memory_cost, initial_memory_poisson, initial_aggression, network_methode)
+    # list of lists (L2) L2 is the list of memory of each individual (in order) at the end. Memory lists L2 for each generation
+    Memo_uncertainty = []
+    Fitness = []  # same as Memory but with fitness data
+    Aggression = []
+    Memo_size = []
+    for i in range(4000):  # simulate this many generations
+        my_network.interact()
+        Memo_uncertainty.append(mean_per_indiv(
+            my_network.memo_uncertainty_history))
+        Fitness.append(lasts(my_network.fitness_history))
+        Aggression.append(list(my_network.aggression))
+        Memo_size.append(list(my_network.memory))
+        # boxes are printed only for a few generations
+        if (i == 0 or i == 100 or i == 1000 or i == 2500 or i == 3000 or i == 3800 or i == 3900 or i == 3999):
+            plot_boxes(my_network, i, x)
+        my_network.refresh_network()
+
+    plot_means(my_network, x)
+
+    print('Memory_size =', Memo_size)
+    print('Agression =', Aggression)
+    print('Fitness =', Fitness)
+    print('Memory_uncertainty =', Memo_uncertainty)

@@ -47,8 +47,8 @@ def my_f(x):
     memory_cost = 0.01
     initial_memory_poisson = 1
     initial_aggression = 0.5
-    network_methode = ['M1']
-    #network_methode = ['M3', 'Small-world', 4, 0.1]
+    # network_methode = ['M1']
+    network_methode = ['M3', 'Small-world', 4, 0.1]
     #network_methode = ['M2','Uniform',6 , 0.1]
 
     # Create the initial Network
