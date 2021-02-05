@@ -9,11 +9,11 @@
 #SBATCH --mail-type=end
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1   
-#SBATCH --cpus-per-task=10
+#SBATCH --cpus-per-task=18
 #SBATCH --time=24:00:00
 #SBATCH --mem=42G
-#SBATCH --error=7th_test.%J.err
-#SBATCH --output=7th_test.%J.py
+#SBATCH --error=memo_test.%J.err
+#SBATCH --output=memo_test.%J.py
 
 module purge
 module load anaconda/3
