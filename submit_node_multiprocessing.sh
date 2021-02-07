@@ -9,7 +9,7 @@
 #SBATCH --mail-type=end
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1   
-#SBATCH --cpus-per-task=18
+#SBATCH --cpus-per-task=1
 #SBATCH --time=24:00:00
 #SBATCH --mem=42G
 #SBATCH --error=memo_test.%J.err
