@@ -78,7 +78,7 @@ def my_f(x):
                         # Aggression = []
                         # Memo_size = []
                         # Sizes = []
-                        for i in range(5):  # simulate this many generations
+                        for i in range(5000):  # simulate this many generations
                             my_network.interact()
                             my_network.refresh_network()
                             # Memo_uncertainty.append(mean_per_indiv(
