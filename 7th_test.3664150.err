@@ -1,0 +1,2 @@
+slurmstepd: error: *** JOB 3664150 ON co2639 CANCELLED AT 2021-02-04T18:18:23 DUE TO TIME LIMIT ***
+slurmstepd: error: Detected 3 oom-kill event(s) in step 3664150.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
