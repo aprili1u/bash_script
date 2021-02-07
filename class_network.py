@@ -77,8 +77,8 @@ class Network:
         self.nodes = []  # list of Node objects of the network
         self.history = []  # after every refresh, save the average fitness, memory, and aggression
         # memories sL-sW for one generation every interaction initial sL-sW = 1
-        self.memo_uncertainty_history = []
-        self.fitness_history = []   # memories fitness for one generation every interaction
+        # self.memo_uncertainty_history = []
+        # self.fitness_history = []   # memories fitness for one generation every interaction
         # initial memory is a poisson distribution
         self.memory = np.random.poisson(
             lam=initial_memory_poisson, size=self.num_nodes)
@@ -101,30 +101,30 @@ class Network:
             # self.nodes.append(
             #     Node(i/(self.num_nodes-1), self.memory[i], self.aggression[i]))
             # fill the initial fitness of each fish (0)
-            self.fitness_history.append([self.nodes[i].fitness])
-            self.memo_uncertainty_history.append(
-                [self.nodes[i].max_size-self.nodes[i].min_size])
+            # self.fitness_history.append([self.nodes[i].fitness])
+            # self.memo_uncertainty_history.append(
+            #     [self.nodes[i].max_size-self.nodes[i].min_size])
         if (self.network_methode[0] == 'M1' or self.network_methode[0] == 'M2'):
-            self.graphs = [nx.MultiGraph()]  # list of each generation's graph
+            self.graph = nx.MultiGraph()  # latest generation's graph
             # the id Max that an edge can get
             self.Max_edges = self.num_nodes*(self.num_nodes-1)/2
             for i in range(num_nodes):
-                self.graphs[0].add_node(i, key=i)
+                self.graph.add_node(i, key=i)
             self.id_edges = id_edges(self.Max_edges)
         if (self.network_methode[0] == 'M3'):
             if (self.network_methode[1] == 'Erdos-Renyi'):
                 self.Max_edges = self.network_methode[2]
-                self.graphs = [nx.gnm_random_graph(num_nodes, self.Max_edges)]
+                self.graph = nx.gnm_random_graph(num_nodes, self.Max_edges)
             if (self.network_methode[1] == 'Small-world'):
-                self.graphs = [nx.watts_strogatz_graph(
-                    num_nodes, self.network_methode[2], self.network_methode[3])]
-                self.Max_edges = len(self.graphs[0].edges())
+                self.graph = nx.watts_strogatz_graph(
+                    num_nodes, self.network_methode[2], self.network_methode[3])
+                self.Max_edges = len(self.graph.edges())
             if (self.network_methode[1] == 'Regular-lattice'):
-                self.graphs = [nx.watts_strogatz_graph(
-                    num_nodes, self.network_methode[2], 0)]
-                self.Max_edges = len(self.graphs[0].edges())
+                self.graph = nx.watts_strogatz_graph(
+                    num_nodes, self.network_methode[2], 0)
+                self.Max_edges = len(self.graph.edges())
         # (self.min_centrality, self.max_centrality) = extremum_centrality(
-        #     self.graphs[0])
+        #     self.graph)
 
     def interact(self):
         # by default each node has the same probability of having an interaction, with all nodes equally likely to interact with all other nodes
@@ -143,15 +143,15 @@ class Network:
                     ind2 = np.random.choice(
                         [index for index in np.arange(self.num_nodes) if index != ind1])
                     self.hawk_dove(self.nodes[ind1], self.nodes[ind2])
-                self.graphs[len(self.graphs)-1].add_edge(ind1, ind2)
+                self.graph.add_edge(ind1, ind2)
 
                 # memories fitness and SL-sW
-                self.memo_uncertainty_history[ind1].append(
-                    self.nodes[ind1].max_size-self.nodes[ind1].min_size)
-                self.memo_uncertainty_history[ind2].append(
-                    self.nodes[ind2].max_size-self.nodes[ind2].min_size)
-                self.fitness_history[ind1].append(self.nodes[ind1].fitness)
-                self.fitness_history[ind2].append(self.nodes[ind2].fitness)
+                # self.memo_uncertainty_history[ind1].append(
+                #     self.nodes[ind1].max_size-self.nodes[ind1].min_size)
+                # self.memo_uncertainty_history[ind2].append(
+                #     self.nodes[ind2].max_size-self.nodes[ind2].min_size)
+                # self.fitness_history[ind1].append(self.nodes[ind1].fitness)
+                # self.fitness_history[ind2].append(self.nodes[ind2].fitness)
 
         # in this case we add weights to edges according to the poisson or Normal distribution
         elif (self.network_methode[0] == 'M2'):
@@ -174,30 +174,30 @@ class Network:
                 self.interactions_per_node*self.num_nodes/2), p=distribution)
             for edge in edges:
                 [ind1, ind2] = self.id_edges[edge]
-                self.graphs[len(self.graphs)-1].add_edge(ind1, ind2)
+                self.graph.add_edge(ind1, ind2)
                 self.hawk_dove(self.nodes[ind1], self.nodes[ind2])
 
                 # memories fitness and SL-sW
-                self.memo_uncertainty_history[ind1].append(
-                    self.nodes[ind1].max_size-self.nodes[ind1].min_size)
-                self.memo_uncertainty_history[ind2].append(
-                    self.nodes[ind2].max_size-self.nodes[ind2].min_size)
-                self.fitness_history[ind1].append(self.nodes[ind1].fitness)
-                self.fitness_history[ind2].append(self.nodes[ind2].fitness)
+                # self.memo_uncertainty_history[ind1].append(
+                #     self.nodes[ind1].max_size-self.nodes[ind1].min_size)
+                # self.memo_uncertainty_history[ind2].append(
+                #     self.nodes[ind2].max_size-self.nodes[ind2].min_size)
+                # self.fitness_history[ind1].append(self.nodes[ind1].fitness)
+                # self.fitness_history[ind2].append(self.nodes[ind2].fitness)
 
         elif (self.network_methode[0] == 'M3'):
             for i in range(int(self.interactions_per_node*self.num_nodes/2)):
                 edge = random.randint(0, self.Max_edges-1)
-                edges = list(self.graphs[0].edges())
+                edges = list(self.graph.edges())
                 (ind1, ind2) = edges[edge]
                 self.hawk_dove(self.nodes[ind1], self.nodes[ind2])
                 # memories fitness and SL-sW
-                self.memo_uncertainty_history[ind1].append(
-                    self.nodes[ind1].max_size-self.nodes[ind1].min_size)
-                self.memo_uncertainty_history[ind2].append(
-                    self.nodes[ind2].max_size-self.nodes[ind2].min_size)
-                self.fitness_history[ind1].append(self.nodes[ind1].fitness)
-                self.fitness_history[ind2].append(self.nodes[ind2].fitness)
+                # self.memo_uncertainty_history[ind1].append(
+                #     self.nodes[ind1].max_size-self.nodes[ind1].min_size)
+                # self.memo_uncertainty_history[ind2].append(
+                #     self.nodes[ind2].max_size-self.nodes[ind2].min_size)
+                # self.fitness_history[ind1].append(self.nodes[ind1].fitness)
+                # self.fitness_history[ind2].append(self.nodes[ind2].fitness)
 
         # Every Node pays a cost per memory slot after every time step (even if they haven't interacted)
         for node in self.nodes:
@@ -355,24 +355,24 @@ class Network:
         return
 
     def refresh_network(self):
-        self.memo_uncertainty_history = []  # memorizes only one generation
-        self.fitness_history = []
+        # self.memo_uncertainty_history = []  # memorizes only one generation
+        # self.fitness_history = []
 
         if (self.network_methode[0] == 'M1' or self.network_methode[0] == 'M2'):
-            self.graphs.append(nx.MultiGraph())  # graph for the new generation
+            self.graph = nx.MultiGraph()  # graph for the new generation
 
         elif (self.network_methode[0] == 'M3'):
             if (self.network_methode[1] == 'Erdos-Renyi'):
-                self.graphs.append(nx.gnm_random_graph(
-                    self.num_nodes, self.Max_edges))
+                self.graph = nx.gnm_random_graph(
+                    self.num_nodes, self.Max_edges)
             if (self.network_methode[1] == 'Small-world'):
-                self.graphs.append(nx.watts_strogatz_graph(
-                    self.num_nodes, self.network_methode[2], self.network_methode[3]))
+                self.graph = nx.watts_strogatz_graph(
+                    self.num_nodes, self.network_methode[2], self.network_methode[3])
             if (self.network_methode[1] == 'Regular-lattice'):
-                self.graphs = [nx.watts_strogatz_graph(
-                    self.num_nodes, self.network_methode[2], 0)]
+                self.graph = nx.watts_strogatz_graph(
+                    self.num_nodes, self.network_methode[2], 0)
         # (self.min_centrality, self.max_centrality) = extremum_centrality(
-        #     self.graphs[0])
+        #     self.graph)
 
         # create new Nodes to fully replace the existing network
         # get fitness of Nodes
@@ -410,30 +410,30 @@ class Network:
         del self.nodes[:]  # clear current nodes
         for i in range(self.num_nodes):  # create new nodes
             if (self.network_methode[0] != 'M3'):
-                self.graphs[len(self.graphs)-1].add_node(i, key=i)
+                self.graph.add_node(i, key=i)
             self.nodes.append(
                 Node(self.sizes[i], reproducing_node_memory[i], reproducing_node_aggression[i]))
             # the size is: i/(self.num_nodes-1)
             # self.nodes.append(Node(
             #     i/(self.num_nodes-1), reproducing_node_memory[i], reproducing_node_aggression[i]))
             # fill the initial fitness of each fish (0)
-            self.fitness_history.append([self.nodes[i].fitness])
-            self.memo_uncertainty_history.append(
-                [self.nodes[i].max_size-self.nodes[i].min_size])
+            # self.fitness_history.append([self.nodes[i].fitness])
+            # self.memo_uncertainty_history.append(
+            #     [self.nodes[i].max_size-self.nodes[i].min_size])
         self.aggression = reproducing_node_aggression
         self.memory = reproducing_node_memory
-        self.graphs[0]
+        # self.graph
 
     def show(self):
         # shows the graph of the last generation
-        print(nx.info(self.graphs[len(self.graphs)-1]))
-        nx.draw(self.graphs[len(self.graphs)-1], with_labels=True)
+        print(nx.info(self.graph))
+        nx.draw(self.graph, with_labels=True)
         plt.show()
 
     def cluster(self):
         # compute the clustering coefficient for nodes of the last generation
-        print(nx.clustering(self.graphs[len(self.graphs)-1]))
+        print(nx.clustering(self.graph))
 
     def small_path(self):
         # Compute the shortest-path betweenness centrality for nodes of the last generation
-        print(nx.betweenness_centrality(self.graphs[len(self.graphs)-1]))
+        print(nx.betweenness_centrality(self.graph))

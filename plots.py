@@ -122,7 +122,7 @@ def plot_boxes(network, i, x):
     plt.title("Box plot of SL-SW")
     ax = fig.add_axes([0, 0, 1, 1])
     bp = ax.boxplot(data)
-    plt.savefig("7plot_boxes_generation"+str(i)+"try"+str(x)+".png")
+    plt.savefig("plot_boxes_generation"+str(i)+"try"+str(x)+".png")
     plt.show()
 
 
@@ -140,7 +140,7 @@ def plot_means(network, x2):
     axes[1].set_title('memory')
     axes[2].plot(x, aggr_history)
     axes[2].set_title('aggression')
-    plt.savefig("7plot_means_try"+str(x2)+".png")
+    plt.savefig("plot_means_try"+str(x2)+".png")
     plt.show()
 
 
