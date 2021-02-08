@@ -53,7 +53,7 @@ def my_f(x):
                 csv_writer_f = csv.writer(new_file2)
 
                 for line in csv_reader:
-                    if line[0] == str(x % 6):
+                    if line[0] == str(x):
 
                         # Simulation parameters
                         num_nodes = int(line[1])
@@ -78,7 +78,7 @@ def my_f(x):
                         # Aggression = []
                         # Memo_size = []
                         # Sizes = []
-                        for i in range(5000):  # simulate this many generations
+                        for i in range(7000):  # simulate this many generations
                             my_network.interact()
                             my_network.refresh_network()
                             # Memo_uncertainty.append(mean_per_indiv(
