@@ -78,6 +78,7 @@ def my_f(x):
                         # Aggression = []
                         # Memo_size = []
                         # Sizes = []
+                        lock.acquire()
                         for i in range(7000):  # simulate this many generations
                             my_network.interact()
                             my_network.refresh_network()
@@ -91,7 +92,6 @@ def my_f(x):
                             #     # plot_boxes(my_network, i, x)
                             #     Sizes.append(my_network.sizes)
 
-                        lock.acquire()
                         csv_writer_m.writerow([line[0]]+[i[1]
                                                          for i in my_network.history])
                         csv_writer_f.writerow([line[0]]+[i[0]
