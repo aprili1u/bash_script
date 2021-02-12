@@ -79,7 +79,7 @@ def my_f(x):
                         # Memo_size = []
                         # Sizes = []
 
-                        for i in range(100):  # simulate this many generations
+                        for i in range(2):  # simulate this many generations
                             my_network.interact()
                             my_network.refresh_network()
                             # Memo_uncertainty.append(mean_per_indiv(
@@ -92,13 +92,13 @@ def my_f(x):
                             #     # plot_boxes(my_network, i, x)
                             #     Sizes.append(my_network.sizes)
                         SD = np.std(
-                            np.array(my_network.history[-100:]), axis=0)  # SD on a moving window of size 100
+                            np.array(my_network.history[-2:]), axis=0)  # SD on a moving window of size 100
 
-                        while (SD[1] > 0.1 and len(my_network.history) < 10000):
+                        while (SD[1] > 0.1 and len(my_network.history) < 10):
                             my_network.interact()
                             my_network.refresh_network()
                             SD = np.std(
-                                np.array(my_network.history[-100:]), axis=0)  # SD on a mouving window of size 100
+                                np.array(my_network.history[-2:]), axis=0)  # SD on a mouving window of size 100
                         lock.acquire()
                         csv_writer_m.writerow([line[0]]+[i[1]
                                                          for i in my_network.history])
@@ -114,9 +114,9 @@ def my_f(x):
 
 # set the number of processes to be used
 # # np = mp.cpu_count()   # ... as detected by multiprocessing
-NP = int(sys.argv[1])   # ... as passed in via the command line
-# NP = 2
+# NP = int(sys.argv[1])   # ... as passed in via the command line
+# # NP = 2
 
-with mp.Pool(NP, initargs=lock,) as p:
-    p.map(my_f, range(NP))
-
+# with mp.Pool(NP, initargs=lock,) as p:
+#     p.map(my_f, range(NP))
+my_f(22)
