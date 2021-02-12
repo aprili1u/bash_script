@@ -78,8 +78,8 @@ def my_f(x):
                         # Aggression = []
                         # Memo_size = []
                         # Sizes = []
-                        lock.acquire()
-                        for i in range(7000):  # simulate this many generations
+
+                        for i in range(100):  # simulate this many generations
                             my_network.interact()
                             my_network.refresh_network()
                             # Memo_uncertainty.append(mean_per_indiv(
@@ -91,7 +91,15 @@ def my_f(x):
                             # if (i == 0 or i == 100 or i == 1000 or i == 3500 or i == 4000 or i == 4800 or i == 4900 or i == 4999):
                             #     # plot_boxes(my_network, i, x)
                             #     Sizes.append(my_network.sizes)
+                        SD = np.std(
+                            np.array(my_network.history[-100:]), axis=0)  # SD on a moving window of size 100
 
+                        while (SD[1] > 0.1 and len(my_network.history) < 10000):
+                            my_network.interact()
+                            my_network.refresh_network()
+                            SD = np.std(
+                                np.array(my_network.history[-100:]), axis=0)  # SD on a mouving window of size 100
+                        lock.acquire()
                         csv_writer_m.writerow([line[0]]+[i[1]
                                                          for i in my_network.history])
                         csv_writer_f.writerow([line[0]]+[i[0]
@@ -106,8 +114,9 @@ def my_f(x):
 
 # set the number of processes to be used
 # # np = mp.cpu_count()   # ... as detected by multiprocessing
-NP = int(sys.argv[1])   # ... as passed in via the command line
-# NP = 2
+# NP = int(sys.argv[1])   # ... as passed in via the command line
+# # NP = 2
 
-with mp.Pool(NP, initargs=lock,) as p:
-    p.map(my_f, range(NP))
+# with mp.Pool(NP, initargs=lock,) as p:
+#     p.map(my_f, range(NP))
+my_f(1)
