@@ -114,9 +114,8 @@ def my_f(x):
 
 # set the number of processes to be used
 # # np = mp.cpu_count()   # ... as detected by multiprocessing
-# NP = int(sys.argv[1])   # ... as passed in via the command line
-# # NP = 2
+NP = int(sys.argv[1])   # ... as passed in via the command line
+# NP = 2
 
-# with mp.Pool(NP, initargs=lock,) as p:
-#     p.map(my_f, range(NP))
-my_f(22)
+with mp.Pool(NP, initargs=lock,) as p:
+    p.map(my_f, range(NP))
