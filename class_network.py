@@ -76,6 +76,8 @@ class Network:
         self.memory_cost = memory_cost
         self.nodes = []  # list of Node objects of the network
         self.history = []  # after every refresh, save the average fitness, memory, and aggression
+        # after every refresh, save the quartile 0.1, 0.25, 0.75, 0.9
+        self.quartiles_history = []
         # memories sL-sW for one generation every interaction initial sL-sW = 1
         # self.memo_uncertainty_history = []
         # self.fitness_history = []   # memories fitness for one generation every interaction
@@ -226,19 +228,19 @@ class Network:
                     node2.fitness += self.payoff_matrix[1]
                     node1.add_memory(node2.size, 1)
                     node2.add_memory(node1.size, 0)
-                    #print('player 1 wins, player 2 hawk')
+                    # print('player 1 wins, player 2 hawk')
                 else:  # player 2 wins
                     node2.fitness += self.payoff_matrix[0]
                     node1.fitness += self.payoff_matrix[1]
                     node1.add_memory(node2.size, 0)
                     node2.add_memory(node1.size, 1)
-                    #print('player 2 wins, both are hawk')
+                    # print('player 2 wins, both are hawk')
             elif node1.size > node2.max_size:  # player 2 plays dove
                 node1.fitness += self.payoff_matrix[2]
                 node2.fitness += self.payoff_matrix[3]
                 node1.add_memory(node2.size, None)
                 node2.add_memory(node1.size, None)
-                #print('player 2 dove, player 1 hawk')
+                # print('player 2 dove, player 1 hawk')
             else:  # player 2 ignorant
                 # player 2 plays ignorant hawk if level of agression of the player is high 'enough' -> maybe we want to change this?
                 if node2.aggression > rand_nums[1]:
@@ -247,39 +249,39 @@ class Network:
                         node2.fitness += self.payoff_matrix[1]
                         node1.add_memory(node2.size, 1)
                         node2.add_memory(node1.size, 0)
-                        #print('player 1 wins, player 2 hawk')
+                        # print('player 1 wins, player 2 hawk')
                     else:  # player 2 wins
                         node2.fitness += self.payoff_matrix[0]
                         node1.fitness += self.payoff_matrix[1]
                         node1.add_memory(node2.size, 0)
                         node2.add_memory(node1.size, 1)
-                        #print('player 2 wins, both hawk')
+                        # print('player 2 wins, both hawk')
                 else:  # player 2 plays ignorant dove
                     node1.fitness += self.payoff_matrix[2]
                     node2.fitness += self.payoff_matrix[3]
                     node1.add_memory(node2.size, None)
                     node2.add_memory(node1.size, None)
-                    #print('player 1 hawk, player 2 dove')
+                    # print('player 1 hawk, player 2 dove')
 
         elif node2.size > node1.max_size:  # player 1 plays dove
             if node1.size < node2.min_size:  # player 2 plays hawk
                 node2.fitness += self.payoff_matrix[2]
                 node1.fitness += self.payoff_matrix[3]
-                #print('player 2 hawk, player 1 dove')
+                # print('player 2 hawk, player 1 dove')
             elif node1.size > node2.max_size:  # player 2 plays dove
                 node1.fitness += self.payoff_matrix[4]
                 node2.fitness += self.payoff_matrix[4]
-                #print('both play dove')
+                # print('both play dove')
             else:  # player 2 ignorant
                 # player 2 plays ignorant hawk
                 if node2.aggression > rand_nums[1]:
                     node2.fitness += self.payoff_matrix[2]
                     node1.fitness += self.payoff_matrix[3]
-                    #print('player 2 hawk, player 1 dove')
+                    # print('player 2 hawk, player 1 dove')
                 else:  # player 2 plays ignorant dove
                     node1.fitness += self.payoff_matrix[4]
                     node2.fitness += self.payoff_matrix[4]
-                    #print('both play dove')
+                    # print('both play dove')
             node1.add_memory(node2.size, None)
             node2.add_memory(node1.size, None)
 
@@ -291,19 +293,19 @@ class Network:
                         node2.fitness += self.payoff_matrix[1]
                         node1.add_memory(node2.size, 1)
                         node2.add_memory(node1.size, 0)
-                        #print('player 2 hawk, player 1 wins')
+                        # print('player 2 hawk, player 1 wins')
                     else:  # player 2 wins
                         node2.fitness += self.payoff_matrix[0]
                         node1.fitness += self.payoff_matrix[1]
                         node1.add_memory(node2.size, 0)
                         node2.add_memory(node1.size, 1)
-                        #print('player 1 hawk, player 2 wins')
+                        # print('player 1 hawk, player 2 wins')
                 elif node1.size > node2.max_size:  # player 2 plays dove
                     node1.fitness += self.payoff_matrix[2]
                     node2.fitness += self.payoff_matrix[3]
                     node1.add_memory(node2.size, None)
                     node2.add_memory(node1.size, None)
-                    #print('player 1 hawk, player 2 dove')
+                    # print('player 1 hawk, player 2 dove')
                 else:  # player 2 ignorant
                     # player 2 plays ignorant hawk
                     if node2.aggression > rand_nums[1]:
@@ -312,38 +314,38 @@ class Network:
                             node2.fitness += self.payoff_matrix[1]
                             node1.add_memory(node2.size, 1)
                             node2.add_memory(node1.size, 0)
-                            #print('player 2 hawk, player 1 wins')
+                            # print('player 2 hawk, player 1 wins')
                         else:  # player 2 wins
                             node2.fitness += self.payoff_matrix[0]
                             node1.fitness += self.payoff_matrix[1]
                             node1.add_memory(node2.size, 0)
                             node2.add_memory(node1.size, 1)
-                            #print('player 1 hawk, player 2 wins')
+                            # print('player 1 hawk, player 2 wins')
                     else:  # player 2 plays ignorant dove
                         node1.fitness += self.payoff_matrix[2]
                         node2.fitness += self.payoff_matrix[3]
                         node1.add_memory(node2.size, None)
                         node2.add_memory(node1.size, None)
-                        #print('player 1 hawk, player 2 dove')
+                        # print('player 1 hawk, player 2 dove')
             else:  # player 1 plays ignorant dove
                 if node1.size < node2.min_size:  # player 2 plays hawk
                     node2.fitness += self.payoff_matrix[2]
                     node1.fitness += self.payoff_matrix[3]
-                    #print('player 2 hawk, player 1 dove')
+                    # print('player 2 hawk, player 1 dove')
                 elif node1.size > node2.max_size:  # player 2 plays dove
                     node1.fitness += self.payoff_matrix[4]
                     node2.fitness += self.payoff_matrix[4]
-                    #print('both play dove')
+                    # print('both play dove')
                 else:  # player 2 ignorant
                     # player 2 plays ignorant hawk
                     if node2.aggression > rand_nums[1]:
                         node2.fitness += self.payoff_matrix[2]
                         node1.fitness += self.payoff_matrix[3]
-                        #print('player 2 hawk, player 1 dove')
+                        # print('player 2 hawk, player 1 dove')
                     else:  # player 2 plays ignorant dove
                         node1.fitness += self.payoff_matrix[4]
                         node2.fitness += self.payoff_matrix[4]
-                        #print('both play dove')
+                        # print('both play dove')
                 node1.add_memory(node2.size, None)
                 node2.add_memory(node1.size, None)
 
@@ -392,7 +394,8 @@ class Network:
         # record means to see results
         self.history.append([mean_fitness, np.mean(
             reproducing_node_memory), np.mean(reproducing_node_aggression)])
-
+        self.quartiles_history.append([np.quantile(reproducing_node_memory, 0.1, interpolation='nearest'), np.quantile(reproducing_node_memory, 0.25, interpolation='nearest'), np.quantile(
+            reproducing_node_memory, 0.75, interpolation='nearest'), np.quantile(reproducing_node_memory, 0.9, interpolation='nearest')])
         # add mutations
         mutations = np.random.binomial(1, 0.1, self.num_nodes)
         sign = np.random.choice([-1, 1], size=self.num_nodes)

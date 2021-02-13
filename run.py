@@ -46,70 +46,82 @@ def my_f(x):
 
         next(csv_reader)
         # lock = FileLock("mean_memories.csv.lock")
-        with open('mean_memories.csv', 'a') as new_file:
+        with open('mean_memories2.csv', 'a') as new_file:
             csv_writer_m = csv.writer(new_file)
 
-            with open('mean_fitness.csv', 'a') as new_file2:
+            with open('mean_fitness2.csv', 'a') as new_file2:
                 csv_writer_f = csv.writer(new_file2)
 
-                for line in csv_reader:
-                    if line[0] == str(x):
+                with open('quartiles_memories.csv', 'a') as new_file3:
+                    csv_writer_qm = csv.writer(new_file3)
 
-                        # Simulation parameters
-                        num_nodes = int(line[1])
-                        interactions_per_node = int(line[2])
-                        hawk_dove_payoff = line[6:12]
-                        hawk_dove_payoff = [float(i) for i in hawk_dove_payoff]
-                        memory_cost = float(line[3])
-                        initial_memory_poisson = int(line[4])
-                        initial_aggression = float(line[5])
-                        network_methode = line[-4:]
-                        network_methode[2] = int(network_methode[2])
-                        network_methode[3] = float(network_methode[3])
-                        # network_methode = ['M3', 'Small-world', 4, 0.1]
-                        # network_methode = ['M2','Uniform',6 , 0.1]
+                    for line in csv_reader:
+                        if line[0] == str(x):
 
-                        # Create the initial Network
-                        my_network = Network(num_nodes, interactions_per_node, hawk_dove_payoff,
-                                             memory_cost, initial_memory_poisson, initial_aggression, network_methode)
-                        # list of lists (L2) L2 is the list of memory of each individual (in order) at the end. Memory lists L2 for each generation
-                        # Memo_uncertainty = []
-                        # Fitness = []  # same as Memory but with fitness data
-                        # Aggression = []
-                        # Memo_size = []
-                        # Sizes = []
+                            # Simulation parameters
+                            num_nodes = int(line[1])
+                            interactions_per_node = int(line[2])
+                            hawk_dove_payoff = line[6:12]
+                            hawk_dove_payoff = [float(i)
+                                                for i in hawk_dove_payoff]
+                            memory_cost = float(line[3])
+                            initial_memory_poisson = int(line[4])
+                            initial_aggression = float(line[5])
+                            network_methode = line[-4:]
+                            network_methode[2] = int(network_methode[2])
+                            network_methode[3] = float(network_methode[3])
+                            # network_methode = ['M3', 'Small-world', 4, 0.1]
+                            # network_methode = ['M2','Uniform',6 , 0.1]
 
-                        for i in range(100):  # simulate this many generations
-                            my_network.interact()
-                            my_network.refresh_network()
-                            # Memo_uncertainty.append(mean_per_indiv(
-                            #     my_network.memo_uncertainty_history))
-                            # Fitness.append(lasts(my_network.fitness_history))
-                            # Aggression.append(list(my_network.aggression))
-                            # Memo_size.append(list(my_network.memory))
-                            # boxes are printed only for a few generations
-                            # if (i == 0 or i == 100 or i == 1000 or i == 3500 or i == 4000 or i == 4800 or i == 4900 or i == 4999):
-                            #     # plot_boxes(my_network, i, x)
-                            #     Sizes.append(my_network.sizes)
-                        SD = np.std(
-                            np.array(my_network.history[-100:]), axis=0)  # SD on a moving window of size 100
+                            # Create the initial Network
+                            my_network = Network(num_nodes, interactions_per_node, hawk_dove_payoff,
+                                                 memory_cost, initial_memory_poisson, initial_aggression, network_methode)
+                            # list of lists (L2) L2 is the list of memory of each individual (in order) at the end. Memory lists L2 for each generation
+                            # Memo_uncertainty = []
+                            # Fitness = []  # same as Memory but with fitness data
+                            # Aggression = []
+                            # Memo_size = []
+                            # Sizes = []
 
-                        while (SD[1] > 0.1 and len(my_network.history) < 10000):
-                            my_network.interact()
-                            my_network.refresh_network()
+                            for i in range(100):  # simulate this many generations
+                                my_network.interact()
+                                my_network.refresh_network()
+                                # Memo_uncertainty.append(mean_per_indiv(
+                                #     my_network.memo_uncertainty_history))
+                                # Fitness.append(lasts(my_network.fitness_history))
+                                # Aggression.append(list(my_network.aggression))
+                                # Memo_size.append(list(my_network.memory))
+                                # boxes are printed only for a few generations
+                                # if (i == 0 or i == 100 or i == 1000 or i == 3500 or i == 4000 or i == 4800 or i == 4900 or i == 4999):
+                                #     # plot_boxes(my_network, i, x)
+                                #     Sizes.append(my_network.sizes)
                             SD = np.std(
-                                np.array(my_network.history[-100:]), axis=0)  # SD on a mouving window of size 100
-                        lock.acquire()
-                        csv_writer_m.writerow([line[0]]+[i[1]
-                                                         for i in my_network.history])
-                        csv_writer_f.writerow([line[0]]+[i[0]
-                                                         for i in my_network.history])
-                        lock.release()
-                        # plot_means(my_network, x)
-                        # print('Memory_size '+str(x)+'=', Memo_size)
-                        # print('Agression ='+str(x), Aggression)
-                        # print('Fitness '+str(x)+'=', Fitness)
-                        # print('Memory_uncertainty ='+str(x), Memo_uncertainty)
+                                np.array(my_network.history[-100:]), axis=0)  # SD on a moving window of size 100
+
+                            while (SD[1] > 0.1 and len(my_network.history) < 10000):
+                                my_network.interact()
+                                my_network.refresh_network()
+                                SD = np.std(
+                                    np.array(my_network.history[-100:]), axis=0)  # SD on a mouving window of size 100
+                            lock.acquire()
+                            csv_writer_m.writerow([line[0]]+[i[1]
+                                                             for i in my_network.history])
+                            csv_writer_f.writerow([line[0]]+[i[0]
+                                                             for i in my_network.history])
+                            csv_writer_qm.writerow([line[0]]+['Quartile: 0.1']+[i[0]
+                                                                                for i in my_network.quartiles_history])
+                            csv_writer_qm.writerow([line[0]]+['Quartile: 0.25']+[i[1]
+                                                                                 for i in my_network.quartiles_history])
+                            csv_writer_qm.writerow([line[0]]+['Quartile: 0.75']+[i[2]
+                                                                                 for i in my_network.quartiles_history])
+                            csv_writer_qm.writerow([line[0]]+['Quartile: 0.9']+[i[3]
+                                                                                for i in my_network.quartiles_history])
+                            lock.release()
+                            # plot_means(my_network, x)
+                            # print('Memory_size '+str(x)+'=', Memo_size)
+                            # print('Agression ='+str(x), Aggression)
+                            # print('Fitness '+str(x)+'=', Fitness)
+                            # print('Memory_uncertainty ='+str(x), Memo_uncertainty)
 
 
 # set the number of processes to be used
