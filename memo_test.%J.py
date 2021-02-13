@@ -142,3 +142,51 @@ tasks of the per-task memory high-water marks; cf. "man sacct"):
 ------------ ---------- ------ ------ ------ ------------ ------------ ---------- -------- 
 3695363       PYTHON_MP      1            80                             00:00:14      0:0 
   
+                                  
+================================= 
+Global information about the job: 
+================================= 
+  
+Job owner: iuyehara(62033)
+Job name:  PYTHON_MP
+Node list: co5629
+Job start: Fri Feb 12 17:44:56 CET 2021
+Job end:   Fri Feb 12 18:55:11 CET 2021
+Work dir:  /u/iuyehara/ceci/bash_script/./
+Command:   /cobra/u/iuyehara/ceci/bash_script/submit_node_multiprocessing.sh
+  
+  
+  
+==========================================================================================
+Information on jobsteps (Note: MaxRSS/AveRSS is the maximum/average over all 
+tasks of the per-task memory high-water marks; cf. "man sacct"): 
+==========================================================================================
+  
+       JobID    JobName NNodes NTasks  NCPUS       MaxRSS       AveRSS    Elapsed ExitCode 
+------------ ---------- ------ ------ ------ ------------ ------------ ---------- -------- 
+3695378       PYTHON_MP      1            80                             01:10:15      0:0 
+  
+                                  
+================================= 
+Global information about the job: 
+================================= 
+  
+Job owner: iuyehara(62033)
+Job name:  PYTHON_MP
+Node list: co4630
+Job start: Fri Feb 12 18:02:15 CET 2021
+Job end:   Fri Feb 12 19:14:01 CET 2021
+Work dir:  /u/iuyehara/ceci/bash_script/./
+Command:   /cobra/u/iuyehara/ceci/bash_script/submit_node_multiprocessing.sh
+  
+  
+  
+==========================================================================================
+Information on jobsteps (Note: MaxRSS/AveRSS is the maximum/average over all 
+tasks of the per-task memory high-water marks; cf. "man sacct"): 
+==========================================================================================
+  
+       JobID    JobName NNodes NTasks  NCPUS       MaxRSS       AveRSS    Elapsed ExitCode 
+------------ ---------- ------ ------ ------ ------------ ------------ ---------- -------- 
+3695379       PYTHON_MP      1            80                             01:11:46      0:0 
+  
