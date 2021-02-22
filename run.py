@@ -121,10 +121,20 @@ def my_f(x):
                     # print(list(my_network.SD_history))
 
 
+def my_f2(x):
+    # print("here")
+    # with open('new_names.csv', 'r') as csv_file:
+    #     csv_reader = csv.reader(csv_file)
+    #     for line in csv_reader:
+    return(x**2)
+
+
 # set the number of processes to be used
 # # np = mp.cpu_count()   # ... as detected by multiprocessing
-NP = int(sys.argv[1])   # ... as passed in via the command line
-# NP = 2
+# NP = int(sys.argv[1])   # ... as passed in via the command line
+NP = 2
 
 with mp.Pool(NP, initargs=lock,) as p:
-    p.map(my_f, range(NP))
+    output = p.starmap_async(my_f2, range(10))
+    # p.map(my_f, range(NP))
+    print(output.get())
