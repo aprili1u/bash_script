@@ -77,7 +77,7 @@ class Network:
         self.nodes = []  # list of Node objects of the network
         self.history = []  # after every refresh, save the average fitness, memory, and aggression
         # after every refresh, save the quartile 0.1, 0.25, 0.75, 0.9
-        self.quartiles_history = []
+        self.SD_history = []
         # memories sL-sW for one generation every interaction initial sL-sW = 1
         # self.memo_uncertainty_history = []
         # self.fitness_history = []   # memories fitness for one generation every interaction
@@ -357,6 +357,7 @@ class Network:
         return
 
     def refresh_network(self):
+        """returns memory of all individuas before refreshing"""
         # self.memo_uncertainty_history = []  # memorizes only one generation
         # self.fitness_history = []
 
@@ -385,8 +386,9 @@ class Network:
         reproducing_node_index = np.random.choice(
             self.num_nodes, self.num_nodes, p=fitness)
         # memory of new nodes is same as parent
-        reproducing_node_memory = np.array(
+        previous_generation_memory = np.array(
             [len(self.nodes[index].size_memory) for index in reproducing_node_index])
+        reproducing_node_memory = previous_generation_memory
         # aggression of new nodes, same as parent
         reproducing_node_aggression = np.array(
             [self.nodes[index].aggression for index in reproducing_node_index])
@@ -394,8 +396,7 @@ class Network:
         # record means to see results
         self.history.append([mean_fitness, np.mean(
             reproducing_node_memory), np.mean(reproducing_node_aggression)])
-        self.quartiles_history.append([np.quantile(reproducing_node_memory, 0.1, interpolation='nearest'), np.quantile(reproducing_node_memory, 0.25, interpolation='nearest'), np.quantile(
-            reproducing_node_memory, 0.75, interpolation='nearest'), np.quantile(reproducing_node_memory, 0.9, interpolation='nearest')])
+        self.SD_history.append(np.std(reproducing_node_memory))
         # add mutations
         mutations = np.random.binomial(1, 0.1, self.num_nodes)
         sign = np.random.choice([-1, 1], size=self.num_nodes)
@@ -425,7 +426,7 @@ class Network:
             #     [self.nodes[i].max_size-self.nodes[i].min_size])
         self.aggression = reproducing_node_aggression
         self.memory = reproducing_node_memory
-        # self.graph
+        return previous_generation_memory
 
     def show(self):
         # shows the graph of the last generation
