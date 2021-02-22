@@ -4,13 +4,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import sys
-import multiprocessing as mp
+from multiprocessing import Pool, Lock
 import cProfile
 import csv
 from filelock import Timeout, FileLock
 
 # global lock
-lock = mp.Lock()
+lock = Lock()
 
 
 def lasts(L):
@@ -122,19 +122,28 @@ def my_f(x):
 
 
 def my_f2(x):
-    # print("here")
-    # with open('new_names.csv', 'r') as csv_file:
-    #     csv_reader = csv.reader(csv_file)
-    #     for line in csv_reader:
-    return(x**2)
+    print("here")
+    with open('new_names.csv', 'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+
+        with open('test.csv', 'a') as new_file:
+            csv_writer_m = csv.writer(new_file)
+
+            for line in csv_reader:
+                if line[0] == str(x % 5):
+                    lock.acquire()
+                    value = int(line[0])**2
+                    csv_writer_m.writerow([value])
+                    lock.release()
+
+            return (x)
 
 
 # set the number of processes to be used
 # # np = mp.cpu_count()   # ... as detected by multiprocessing
-# NP = int(sys.argv[1])   # ... as passed in via the command line
-NP = 2
-
-with mp.Pool(NP, initargs=lock,) as p:
-    output = p.starmap_async(my_f2, range(10))
-    # p.map(my_f, range(NP))
-    print(output.get())
+NP = int(sys.argv[1])   # ... as passed in via the command line
+if __name__ == '__main__':
+    NP = 40
+    pool = Pool(processes=NP, initargs=lock)
+    r = pool.map_async(my_f, range(81))
+    print(r.get())
