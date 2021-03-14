@@ -20,4 +20,4 @@ module load anaconda/3
 
 export OMP_NUM_THREADS=1
 
-python ./run.py $SLURM_CPUS_PER_TASK
+python ./social_brain_hyoithesis.py $SLURM_CPUS_PER_TASK
